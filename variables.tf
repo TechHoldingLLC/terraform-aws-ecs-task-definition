@@ -65,3 +65,8 @@ variable "task_memory" {
   description = "ECS fargate task memory"
   type        = number
 }
+
+variable "health_check" {
+  description = "task definition health check"
+  default     = null
+}
