@@ -10,6 +10,14 @@ output "arn" {
   value = aws_ecs_task_definition.task.arn
 }
 
+output "arn_without_revision" {
+  value = aws_ecs_task_definition.task.arn_without_revision
+}
+
+output "revision" {
+  value = aws_ecs_task_definition.task.revision
+}
+
 output "environment_variables" {
   value = local.environment_variables
 }
