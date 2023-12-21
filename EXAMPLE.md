@@ -15,6 +15,14 @@ module "ecs_task_definition" {
   port        = 80
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
+  Refer this doc for more information on health check https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-ecs-taskdefinition-healthcheck.html
+  health_check = {
+    command     = ["CMD-SHELL", "curl -f http://localhost:${#PORT}${#HEALTH_CHECK_PATH} || exit 1"]
+    interval    = 30
+    timeout     = 5
+    retries     = 2
+    startPeriod = 0
+  }
   environment_variables = {
     TEST = "1"
     FOO = "BAR"

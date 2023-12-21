@@ -68,5 +68,6 @@ variable "task_memory" {
 
 variable "health_check" {
   description = "task definition health check"
+  type        = any
   default     = null
 }

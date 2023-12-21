@@ -42,6 +42,7 @@ No modules.
 | <a name="input_network_mode"></a> [network\_mode](#input\_network\_mode) | Docker networking mode to use for the containers in the task. The valid values are none, bridge, awsvpc, and host. | `string` | `"awsvpc"` | no |
 | <a name="input_port"></a> [port](#input\_port) | ECS container port | `number` | `0` | no |
 | <a name="input_requires_compatibilities"></a> [requires\_compatibilities](#input\_requires\_compatibilities) | A set of launch types required by the task. The valid values are EC2 and FARGATE. | `list(string)` | n/a | yes |
+| <a name="input_health_check"></a> [health\_check](#input\_health\_check) | ECS task definition health check | `any` | n/a | no |
 | <a name="input_secret_environment_variables"></a> [secret\_environment\_variables](#input\_secret\_environment\_variables) | ECS secrets environment variables | `map(string)` | n/a | yes |
 | <a name="input_ssm_kms_alias"></a> [ssm\_kms\_alias](#input\_ssm\_kms\_alias) | SSM kms key alias | `string` | `"alias/aws/ssm"` | no |
 | <a name="input_task_cpu"></a> [task\_cpu](#input\_task\_cpu) | ECS fargate task cpu | `number` | n/a | yes |
