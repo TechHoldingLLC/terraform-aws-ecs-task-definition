@@ -43,6 +43,7 @@ variable "port" {
 variable "requires_compatibilities" {
   description = " A set of launch types required by the task. The valid values are EC2 and FARGATE."
   type        = list(string)
+  default     = ["FARGATE"]
 }
 
 variable "secret_environment_variables" {
