@@ -10,7 +10,7 @@ variable "cloudwatch_log_retention_in_days" {
 variable "command" {
   description = "Task command"
   type        = string
-  default     = null
+  default     = ""
 }
 
 variable "image" {
@@ -26,6 +26,7 @@ variable "name" {
 variable "environment_variables" {
   description = "ECS secrets environment variables"
   type        = map(string)
+  default     = {}
 }
 
 variable "network_mode" {
@@ -49,6 +50,7 @@ variable "requires_compatibilities" {
 variable "secret_environment_variables" {
   description = "ECS secrets environment variables"
   type        = map(string)
+  default     = {}
 }
 
 variable "ssm_kms_alias" {
