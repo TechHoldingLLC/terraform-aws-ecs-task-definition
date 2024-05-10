@@ -26,9 +26,9 @@ resource "aws_ecs_task_definition" "task" {
             awslogs-stream-prefix = "ecs"
           }
         },
-        name  = var.name
-        image = var.image
-        healthcheck  = var.health_check
+        name        = var.name
+        image       = var.image
+        healthcheck = var.health_check
         portMappings = var.port > 0 ? [
           {
             hostPort      = var.port
