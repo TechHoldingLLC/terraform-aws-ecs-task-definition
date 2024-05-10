@@ -6,7 +6,7 @@ Note: By default, network_mode is set to "awsvpc", command is set to null and km
 ## Create ECS Task Definition
 ```
 module "ecs_task_definition" {
-  source      = "./ecs-task-definition"
+  source      = "git::https://github.com/TechHoldingLLC/terraform-aws-ecs-task-definition.git?ref=v1.0.3"
   name        = "demo-ecs-task-definition"
   image       = "demo-image"
   task_cpu    = 256
