@@ -24,7 +24,7 @@ locals {
   secret_environment_variables = flatten([
     for name, valueFrom in var.secret_environment_variables : {
       name      = name
-      valueFrom = valueFrom
+      valueFrom = "${var.parameter_path_prefix}${valueFrom}"
     }
   ])
 }

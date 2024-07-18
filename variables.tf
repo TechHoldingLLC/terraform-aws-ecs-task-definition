@@ -13,6 +13,12 @@ variable "command" {
   default     = ""
 }
 
+variable "parameter_path_prefix" {
+  description = "Path prefix for SSM parameter"
+  type        = string
+  default     = ""
+}
+
 variable "image" {
   description = "ECR image"
   type        = string
