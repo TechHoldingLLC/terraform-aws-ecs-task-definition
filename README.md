@@ -41,6 +41,7 @@ No modules.
 | <a name="input_image"></a> [image](#input\_image) | ECR image | `string` | n/a | yes |
 | <a name="input_name"></a> [name](#input\_name) | ECS task definition name | `string` | n/a | yes |
 | <a name="input_network_mode"></a> [network\_mode](#input\_network\_mode) | Docker networking mode to use for the containers in the task. The valid values are none, bridge, awsvpc, and host. | `string` | `"awsvpc"` | no |
+| <a name="input_parameter_path_prefix"></a> [parameter\_path\_prefix](#input\_parameter\_path\_prefix) | Path prefix for SSM parameter | `string` | `""` | no |
 | <a name="input_port"></a> [port](#input\_port) | ECS container port | `number` | `0` | no |
 | <a name="input_requires_compatibilities"></a> [requires\_compatibilities](#input\_requires\_compatibilities) | A set of launch types required by the task. The valid values are EC2 and FARGATE. | `list(string)` | <pre>[<br>  "FARGATE"<br>]</pre> | no |
 | <a name="input_secret_environment_variables"></a> [secret\_environment\_variables](#input\_secret\_environment\_variables) | ECS secrets environment variables | `map(string)` | `{}` | no |
