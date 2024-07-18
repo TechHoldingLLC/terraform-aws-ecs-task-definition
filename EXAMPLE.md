@@ -27,8 +27,9 @@ module "ecs_task_definition" {
     TEST = "1"
     FOO = "BAR"
   }
+  parameter_path_prefix = "/project/env"
   secret_environment_variables = {
-    SECRET = "path/to/ssm/variable"
+    SECRET = "remaining_path/to/ssm/variable"
   }
   cloudwatch_log_retention_in_days = 30
 }
