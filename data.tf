@@ -16,7 +16,7 @@ data "aws_ssm_parameter" "ssm_secret" {
 
 resource "random_id" "ssm_version" {
   keepers = {
-    ssm_parameter_versions = join(",", [for s in data.aws_ssm_parameter.ssm_secret : s.version])
+    ssm_parameter_versions = join(",", [for s in data.aws_ssm_parameter.ssm_secret : s.name])
   }
   byte_length = 8
 }
