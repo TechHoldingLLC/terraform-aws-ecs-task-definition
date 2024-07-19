@@ -14,10 +14,11 @@ data "aws_ssm_parameter" "ssm_secret" {
   name     = "${var.parameter_path_prefix}/${each.value}"
 }
 
-resource "null_resource" "ssm_secret_version_tracker" {
-  triggers = {
-    ssm_versions = join(",", [for s in data.aws_ssm_parameter.ssm_secret : s.version])
+resource "random_id" "ssm_version" {
+  keepers = {
+    ssm_parameter_versions = join(",", [for s in data.aws_ssm_parameter.ssm_secret : s.version])
   }
+  byte_length = 8
 }
 
 locals {
@@ -25,6 +26,7 @@ locals {
   account_id      = data.aws_caller_identity.current.account_id
   region          = data.aws_region.current.name
   ssm_kms_key_arn = data.aws_kms_alias.ssm.target_key_arn
+  # ssm_versions_hash = sha256(join(",", [for s in data.aws_ssm_parameter.ssm_secret : s.version]))
 
   environment_variables = flatten([
     for name, value in var.environment_variables : {
