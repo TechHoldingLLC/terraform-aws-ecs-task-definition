@@ -45,7 +45,7 @@ resource "aws_ecs_task_definition" "task" {
 
   lifecycle {
     replace_triggered_by = [
-      random_id.ssm_version
+      null_resource.ssm_version_check
     ]
   }
 }

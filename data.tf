@@ -14,11 +14,10 @@ data "aws_ssm_parameter" "ssm_secret" {
   name     = "${var.parameter_path_prefix}/${each.value}"
 }
 
-resource "random_id" "ssm_version" {
-  keepers = {
-    ssm_parameter_versions = join(",", [for s in data.aws_ssm_parameter.ssm_secret : s.name])
+resource "null_resource" "ssm_version_check" {
+  triggers = {
+    ssm_versions = join("", [for s in data.aws_ssm_parameter.ssm_secret : s.version])
   }
-  byte_length = 8
 }
 
 locals {
