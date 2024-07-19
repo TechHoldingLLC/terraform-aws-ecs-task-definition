@@ -29,7 +29,7 @@ locals {
   secret_environment_variables = flatten([
     for name, valueFrom in var.secret_environment_variables : {
       name      = name
-      valueFrom = data.aws_ssm_parameter.ssm_secret[name].arn
+      valueFrom = data.aws_ssm_parameter.ssm_secret.arn
     }
   ])
 }
