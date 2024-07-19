@@ -14,6 +14,12 @@ data "aws_ssm_parameter" "ssm_secret" {
   name     = "${var.parameter_path_prefix}/${each.value}"
 }
 
+resource "null_resource" "ssm_secret_version_tracker" {
+  triggers = {
+    ssm_versions = join(",", [for s in data.aws_ssm_parameter.ssm_secret : s.version])
+  }
+}
+
 locals {
   aws_partition   = data.aws_partition.current.partition
   account_id      = data.aws_caller_identity.current.account_id
