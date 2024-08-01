@@ -9,6 +9,22 @@ data "aws_kms_alias" "ssm" {
   name = var.ssm_kms_alias
 }
 
+data "aws_ssm_parameter" "ssm_secret" {
+  for_each = var.secret_environment_variables
+  name     = "${var.parameter_path_prefix}/${each.value}"
+}
+
+## Mapping : SSM path => version ( to detect the change in particular path's value)
+resource "null_resource" "ssm_version_check" {
+  triggers = {
+    ssm_versions = jsonencode(
+      {
+        for para in data.aws_ssm_parameter.ssm_secret : para.name => para.version
+      }
+    )
+  }
+}
+
 locals {
   aws_partition   = data.aws_partition.current.partition
   account_id      = data.aws_caller_identity.current.account_id
@@ -24,7 +40,7 @@ locals {
   secret_environment_variables = flatten([
     for name, valueFrom in var.secret_environment_variables : {
       name      = name
-      valueFrom = "${var.parameter_path_prefix}/${valueFrom}"
+      valueFrom = data.aws_ssm_parameter.ssm_secret[name].name
     }
   ])
 }
