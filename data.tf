@@ -16,7 +16,7 @@ data "aws_ssm_parameter" "ssm_secret" {
 
 resource "null_resource" "ssm_version_check" {
   triggers = {
-    ssm_versions = { for para in data.aws_ssm_parameter.ssm_secret : para.name => para.version }
+    ssm_versions = jsonencode({ for para in data.aws_ssm_parameter.ssm_secret : para.name => para.version })
   }
 }
 
