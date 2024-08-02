@@ -42,4 +42,11 @@ resource "aws_ecs_task_definition" "task" {
       }
     ]
   )
+
+  ## The resource will be restarted if null resource restarts 
+  lifecycle {
+    replace_triggered_by = [
+      null_resource.parameter_version_check
+    ]
+  }
 }
