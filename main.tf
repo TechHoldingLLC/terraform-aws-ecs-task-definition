@@ -31,6 +31,7 @@ resource "aws_ecs_task_definition" "task" {
         healthcheck = var.health_check
         portMappings = var.port > 0 ? [
           {
+            name          = var.port_name
             hostPort      = var.port
             protocol      = "tcp"
             containerPort = var.port

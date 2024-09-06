@@ -80,3 +80,9 @@ variable "health_check" {
   type        = any
   default     = null
 }
+
+variable "port_name" {
+  description = "task definition health check"
+  type        = any
+  default     = null
+}
