@@ -86,3 +86,9 @@ variable "port_name" {
   type        = any
   default     = null
 }
+
+variable "additional_containers" {
+  description = "Additional container definitions (sidecars) to use for the task."
+  type = any
+  default = []
+}
