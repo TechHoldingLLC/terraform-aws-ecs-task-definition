@@ -2,7 +2,17 @@
 #  data.tf  #
 #############
 
+data "aws_partition" "current" {}
+data "aws_caller_identity" "current" {}
 data "aws_region" "current" {}
+data "aws_kms_alias" "ssm" {
+  name = var.ssm_kms_alias
+}
+
+data "aws_ssm_parameter" "secret_env_vars" {
+  for_each = var.secret_environment_variables
+  name     = "${var.parameter_path_prefix}/${each.value}"
+}
 
 ## Create map of "parameter_name => parameter_version" to detect the change of parameter's value
 resource "null_resource" "parameter_version_check" {

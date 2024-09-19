@@ -14,8 +14,8 @@ variable "operating_system_family" {
 
 variable "command" {
   description = "The command that's passed to the container"
-  type        = list(string)
-  default     = []
+  type        = string
+  default     = ""
 }
 
 variable "cpu" {
@@ -77,11 +77,8 @@ variable "entrypoint" {
 
 variable "environment_variables" {
   description = "The environment variables to pass to the container"
-  type = list(object({
-    name  = string
-    value = string
-  }))
-  default = []
+  type        = map(string)
+  default     = {}
 }
 
 variable "environment_files" {
@@ -180,6 +177,12 @@ variable "name" {
   default     = null
 }
 
+variable "parameter_path_prefix" {
+  description = "Path prefix for SSM parameter"
+  type        = string
+  default     = ""
+}
+
 variable "port_mappings" {
   description = "The list of port mappings for the container. Port mappings allow containers to access ports on the host container instance to send or receive traffic. For task definitions that use the awsvpc network mode, only specify the containerPort. The hostPort can be left blank or it must be the same value as the containerPort"
   type        = list(any)
@@ -221,11 +224,14 @@ variable "resource_requirements" {
 
 variable "secret_environment_variables" {
   description = "The secrets to pass to the container. For more information, see [Specifying Sensitive Data](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/specifying-sensitive-data.html) in the Amazon Elastic Container Service Developer Guide"
-  type = list(object({
-    name      = string
-    valueFrom = string
-  }))
-  default = []
+  type        = map(string)
+  default     = {}
+}
+
+variable "ssm_kms_alias" {
+  description = "SSM kms key alias"
+  type        = string
+  default     = "alias/aws/ssm"
 }
 
 variable "start_timeout" {
@@ -278,12 +284,6 @@ variable "working_directory" {
 # CloudWatch Log Group
 ################################################################################
 
-variable "service" {
-  description = "The name of the service that the container definition is associated with"
-  type        = string
-  default     = ""
-}
-
 variable "enable_cloudwatch_logging" {
   description = "Determines whether CloudWatch logging is configured for this container definition. Set to `false` to use other logging drivers"
   type        = bool
@@ -296,19 +296,7 @@ variable "create_cloudwatch_log_group" {
   default     = true
 }
 
-variable "cloudwatch_log_group_name" {
-  description = "Custom name of CloudWatch log group for a service associated with the container definition"
-  type        = string
-  default     = null
-}
-
-variable "cloudwatch_log_group_use_name_prefix" {
-  description = "Determines whether the log group name should be used as a prefix"
-  type        = bool
-  default     = false
-}
-
-variable "cloudwatch_log_group_retention_in_days" {
+variable "cloudwatch_log_retention_in_days" {
   description = "Number of days to retain log events."
   type        = number
   default     = null
