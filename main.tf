@@ -15,34 +15,7 @@ resource "aws_ecs_task_definition" "task" {
   requires_compatibilities = var.requires_compatibilities
   cpu                      = var.task_cpu
   memory                   = var.task_memory
-  container_definitions = jsonencode(
-    [
-      {
-        logConfiguration = {
-          logDriver = "awslogs"
-          options = {
-            awslogs-group         = aws_cloudwatch_log_group.ecs_task.name
-            awslogs-region        = local.region
-            awslogs-stream-prefix = "ecs"
-          }
-        },
-        name        = var.name
-        image       = var.image
-        healthcheck = var.health_check
-        portMappings = var.port > 0 ? [
-          {
-            name          = var.port_name
-            hostPort      = var.port
-            protocol      = "tcp"
-            containerPort = var.port
-          }
-        ] : []
-        environment = local.environment_variables
-        secrets     = local.secret_environment_variables
-        command     = length(var.command) > 0 ? ["sh", "-c", var.command] : null
-      }
-    ]
-  )
+  container_definitions    = jsonencode(var.container_definitions)
 
   ## The resource will be restarted if null resource restarts 
   lifecycle {
