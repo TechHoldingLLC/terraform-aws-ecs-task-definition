@@ -2,10 +2,10 @@
 #  ecs-task-defination/ecs-task-defination.tf  #
 ################################################
 
-resource "aws_cloudwatch_log_group" "ecs_task" {
-  name              = "/aws/ecs/${var.name}"
-  retention_in_days = var.cloudwatch_log_retention_in_days
-}
+# resource "aws_cloudwatch_log_group" "ecs_task" {
+#   name              = "/aws/ecs/${var.name}"
+#   retention_in_days = var.cloudwatch_log_retention_in_days
+# }
 
 resource "aws_ecs_task_definition" "task" {
   family                   = var.name
@@ -18,9 +18,9 @@ resource "aws_ecs_task_definition" "task" {
   container_definitions    = jsonencode(var.container_definitions)
 
   ## The resource will be restarted if null resource restarts 
-  lifecycle {
-    replace_triggered_by = [
-      null_resource.parameter_version_check
-    ]
-  }
+  # lifecycle {
+  #   replace_triggered_by = [
+  #     null_resource.parameter_version_check
+  #   ]
+  # }
 }
