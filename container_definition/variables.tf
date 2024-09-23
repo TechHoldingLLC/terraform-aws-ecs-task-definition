@@ -1,6 +1,6 @@
-##################
-#  variables.tf  #
-##################
+#######################################
+#  container-definition/variables.tf  #
+#######################################
 
 variable "operating_system_family" {
   description = "The OS family for task"
@@ -226,12 +226,6 @@ variable "secret_environment_variables" {
   description = "The secrets to pass to the container. For more information, see [Specifying Sensitive Data](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/specifying-sensitive-data.html) in the Amazon Elastic Container Service Developer Guide"
   type        = map(string)
   default     = {}
-}
-
-variable "ssm_kms_alias" {
-  description = "SSM kms key alias"
-  type        = string
-  default     = "alias/aws/ssm"
 }
 
 variable "start_timeout" {

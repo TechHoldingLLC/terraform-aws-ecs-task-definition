@@ -1,13 +1,8 @@
-#############
-#  data.tf  #
-#############
+##################################
+#  container-definition/data.tf  #
+##################################
 
-data "aws_partition" "current" {}
-data "aws_caller_identity" "current" {}
 data "aws_region" "current" {}
-data "aws_kms_alias" "ssm" {
-  name = var.ssm_kms_alias
-}
 
 data "aws_ssm_parameter" "secret_env_vars" {
   for_each = var.secret_environment_variables
