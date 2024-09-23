@@ -18,14 +18,6 @@ output "revision" {
   value = aws_ecs_task_definition.task.revision
 }
 
-# output "environment_variables" {
-#   value = local.environment_variables
-# }
-
-output "secret_environment_variables" {
-  value = local.secret_environment_variables
-}
-
 output "execution_role_arn" {
   value = aws_iam_role.ecs_task_execution.arn
 }
@@ -41,7 +33,3 @@ output "role_name" {
 output "role_arn" {
   value = aws_iam_role.task.arn
 }
-
-# output "log_group_name" {
-#   value = aws_cloudwatch_log_group.ecs_task.name
-# }
