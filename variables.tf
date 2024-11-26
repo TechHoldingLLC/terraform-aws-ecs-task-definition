@@ -67,10 +67,10 @@ variable "volumes" {
       }))
     }))
   }))
-  default     = []
+  default = []
 }
 
-variable "ephemeral_storage_size"{
-  type = number
+variable "ephemeral_storage_size" {
+  type    = number
   default = null
 }

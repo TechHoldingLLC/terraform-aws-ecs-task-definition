@@ -12,8 +12,11 @@ resource "aws_ecs_task_definition" "task" {
   memory                   = var.task_memory
   container_definitions    = jsonencode(var.container_definitions)
 
-  ephemeral_storage {
-    size_in_gib = try(var.ephemeral_storage_size, null)
+  dynamic "ephemeral_storage" {
+    for_each = var.ephemeral_storage_size == 0 ? [] : [var.ephemeral_storage_size]
+    content {
+      size_in_gib = var.ephemeral_storage_size
+    }
   }
   dynamic "volume" {
     for_each = var.volumes
