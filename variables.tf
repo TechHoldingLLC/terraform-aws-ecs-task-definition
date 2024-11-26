@@ -55,15 +55,6 @@ variable "volumes" {
       scope         = optional(string)
     }))
 
-    # fsx_windows_file_server_volume_configuration = optional(object({
-    #   file_system_id      = string
-    #   root_directory      = string
-    #   authorization_config = object({
-    #     access_point_id = string
-    #     iam             = string
-    #   })
-    # }))
-
     efs_volume_configuration = optional(object({
       file_system_id          = string
       root_directory          = optional(string)

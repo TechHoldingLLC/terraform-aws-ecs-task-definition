@@ -33,23 +33,6 @@ resource "aws_ecs_task_definition" "task" {
           scope         = docker_volume_configuration.value.scope
         }
       }
-      # dynamic "fsx_windows_file_server_volume_configuration" {
-      #   for_each = volume.value.fsx_windows_file_server_volume_configuration != null ? [volume.value.fsx_windows_file_server_volume_configuration] : []
-
-      #   content {
-      #           file_system_id      = fsx_windows_file_server_volume_configuration.value.file_system_id
-      #           root_directory      = fsx_windows_file_server_volume_configuration.value.root_directory
-      #     dynamic "authorization_config" {
-      #       for_each = fsx_windows_file_server_volume_configuration.value.authorization_config != null ? [
-      #         fsx_windows_file_server_volume_configuration.value.authorization_config
-      #       ] : []
-      #       content {
-      #         credentials_parameter = authorization_config.value.credentials_parameter
-      #         domain = authorization_config.value.domain
-      #       }
-      #     }
-      #   }
-      # }
       dynamic "efs_volume_configuration" {
         for_each = volume.value.efs_volume_configuration != null ? [volume.value.efs_volume_configuration] : []
 
