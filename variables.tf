@@ -40,3 +40,38 @@ variable "container_definitions" {
   type        = any
   default     = []
 }
+
+variable "volumes" {
+  description = "A list of volume definitions."
+  type = list(object({
+    name      = string
+    host_path = optional(string)
+
+    docker_volume_configuration = optional(object({
+      autoprovision = optional(bool)
+      driver        = optional(string)
+      driver_opts   = optional(map(any))
+      labels        = optional(map(any))
+      scope         = optional(string)
+    }))
+
+    efs_volume_configuration = optional(object({
+      file_system_id          = string
+      root_directory          = optional(string)
+      transit_encryption      = optional(string)
+      transit_encryption_port = optional(number)
+
+      authorization_config = optional(object({
+        access_point_id = string
+        iam             = optional(string)
+      }))
+    }))
+  }))
+  default = []
+}
+
+variable "ephemeral_storage_size" {
+  description = "value of ephemeral storage size in GB"
+  type        = number
+  default     = null
+}

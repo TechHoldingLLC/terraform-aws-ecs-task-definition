@@ -222,6 +222,12 @@ variable "resource_requirements" {
   default = []
 }
 
+variable "restart_policy" {
+  description = "The container restart policy and associated configuration parameters. When you set up a restart policy for a container, Amazon ECS can restart the container without needing to replace the task"
+  type        = map(any)
+  default     = {}
+}
+
 variable "secret_environment_variables" {
   description = "The secrets to pass to the container. For more information, see [Specifying Sensitive Data](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/specifying-sensitive-data.html) in the Amazon Elastic Container Service Developer Guide"
   type        = map(string)

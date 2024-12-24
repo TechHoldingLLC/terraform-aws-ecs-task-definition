@@ -34,12 +34,14 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_container_definitions"></a> [container\_definitions](#input\_container\_definitions) | Additional container definitions (sidecars) to use for the task. | `any` | `[]` | no |
+| <a name="input_ephemeral_storage_size"></a> [ephemeral\_storage\_size](#input\_ephemeral\_storage\_size) | value of ephemeral storage size in GB | `number` | `null` | no |
 | <a name="input_name"></a> [name](#input\_name) | ECS task definition name | `string` | n/a | yes |
 | <a name="input_network_mode"></a> [network\_mode](#input\_network\_mode) | Docker networking mode to use for the containers in the task. The valid values are none, bridge, awsvpc, and host. | `string` | `"awsvpc"` | no |
-| <a name="input_requires_compatibilities"></a> [requires\_compatibilities](#input\_requires\_compatibilities) | A set of launch types required by the task. The valid values are EC2 and FARGATE. | `list(string)` | <pre>[<br>  "FARGATE"<br>]</pre> | no |
+| <a name="input_requires_compatibilities"></a> [requires\_compatibilities](#input\_requires\_compatibilities) | A set of launch types required by the task. The valid values are EC2 and FARGATE. | `list(string)` | <pre>[<br/>  "FARGATE"<br/>]</pre> | no |
 | <a name="input_ssm_kms_alias"></a> [ssm\_kms\_alias](#input\_ssm\_kms\_alias) | SSM kms key alias | `string` | `"alias/aws/ssm"` | no |
 | <a name="input_task_cpu"></a> [task\_cpu](#input\_task\_cpu) | ECS fargate task cpu | `number` | n/a | yes |
 | <a name="input_task_memory"></a> [task\_memory](#input\_task\_memory) | ECS fargate task memory | `number` | n/a | yes |
+| <a name="input_volumes"></a> [volumes](#input\_volumes) | A list of volume definitions. | <pre>list(object({<br/>    name      = string<br/>    host_path = optional(string)<br/><br/>    docker_volume_configuration = optional(object({<br/>      autoprovision = optional(bool)<br/>      driver        = optional(string)<br/>      driver_opts   = optional(map(any))<br/>      labels        = optional(map(any))<br/>      scope         = optional(string)<br/>    }))<br/><br/>    efs_volume_configuration = optional(object({<br/>      file_system_id          = string<br/>      root_directory          = optional(string)<br/>      transit_encryption      = optional(string)<br/>      transit_encryption_port = optional(number)<br/><br/>      authorization_config = optional(object({<br/>        access_point_id = string<br/>        iam             = optional(string)<br/>      }))<br/>    }))<br/>  }))</pre> | `[]` | no |
 
 ## Outputs
 
