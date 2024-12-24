@@ -71,6 +71,7 @@ variable "volumes" {
 }
 
 variable "ephemeral_storage_size" {
-  type    = number
-  default = null
+  description = "value of ephemeral storage size in GB"
+  type        = number
+  default     = null
 }

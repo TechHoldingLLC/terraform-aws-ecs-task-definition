@@ -34,7 +34,7 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_container_definitions"></a> [container\_definitions](#input\_container\_definitions) | Additional container definitions (sidecars) to use for the task. | `any` | `[]` | no |
-| <a name="input_ephemeral_storage_size"></a> [ephemeral\_storage\_size](#input\_ephemeral\_storage\_size) | n/a | `number` | `null` | no |
+| <a name="input_ephemeral_storage_size"></a> [ephemeral\_storage\_size](#input\_ephemeral\_storage\_size) | value of ephemeral storage size in GB | `number` | `null` | no |
 | <a name="input_name"></a> [name](#input\_name) | ECS task definition name | `string` | n/a | yes |
 | <a name="input_network_mode"></a> [network\_mode](#input\_network\_mode) | Docker networking mode to use for the containers in the task. The valid values are none, bridge, awsvpc, and host. | `string` | `"awsvpc"` | no |
 | <a name="input_requires_compatibilities"></a> [requires\_compatibilities](#input\_requires\_compatibilities) | A set of launch types required by the task. The valid values are EC2 and FARGATE. | `list(string)` | <pre>[<br/>  "FARGATE"<br/>]</pre> | no |

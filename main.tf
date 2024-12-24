@@ -13,9 +13,9 @@ resource "aws_ecs_task_definition" "task" {
   container_definitions    = jsonencode(var.container_definitions)
 
   dynamic "ephemeral_storage" {
-    for_each = var.ephemeral_storage_size == 0 ? [] : [var.ephemeral_storage_size]
+    for_each = var.ephemeral_storage_size > 0 ? { "ephemeral" = var.ephemeral_storage_size } : {}
     content {
-      size_in_gib = var.ephemeral_storage_size
+      size_in_gib = ephemeral_storage.value
     }
   }
   dynamic "volume" {
