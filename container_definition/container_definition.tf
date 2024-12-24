@@ -57,6 +57,7 @@ locals {
     readonlyRootFilesystem = local.is_not_windows ? var.readonly_root_filesystem : null
     repositoryCredentials  = length(var.repository_credentials) > 0 ? var.repository_credentials : null
     resourceRequirements   = length(var.resource_requirements) > 0 ? var.resource_requirements : null
+    restartPolicy          = length(var.restart_policy) > 0 ? var.restart_policy : null
     secrets                = local.secret_environment_variables
     startTimeout           = var.start_timeout
     stopTimeout            = var.stop_timeout
