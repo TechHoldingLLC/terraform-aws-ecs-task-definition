@@ -62,4 +62,13 @@ resource "aws_ecs_task_definition" "task" {
       }
     }
   }
+
+  dynamic "runtime_platform" {
+    for_each = var.runtime_platform != null ? [var.runtime_platform] : []
+
+    content {
+      operating_system_family = runtime_platform.value.operating_system_family
+      cpu_architecture        = runtime_platform.value.cpu_architecture
+    }
+  }
 }
