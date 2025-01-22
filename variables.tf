@@ -75,3 +75,12 @@ variable "ephemeral_storage_size" {
   type        = number
   default     = null
 }
+
+variable "runtime_platform" {
+  description = "The operating system family and the CPU architecture to use for the task. The valid values for operatingSystemFamily are WINDOWS and LINUX. The valid values for cpuArchitecture are X86_64 and ARM64."
+  type = object({
+    operating_system_family = string
+    cpu_architecture        = string
+  })
+  default = null
+}
