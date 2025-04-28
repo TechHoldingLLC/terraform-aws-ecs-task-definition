@@ -9,6 +9,8 @@ locals {
     { for k, v in {
       logDriver = "awslogs",
       options = {
+        mode                  = var.log_mode,
+        max-buffer-size       = var.log_max_buffer_size,
         awslogs-region        = local.region
         awslogs-group         = try(aws_cloudwatch_log_group.this[0].name, ""),
         awslogs-stream-prefix = "ecs"
