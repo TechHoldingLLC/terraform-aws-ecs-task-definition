@@ -280,6 +280,18 @@ variable "working_directory" {
   default     = null
 }
 
+variable "log_mode" {
+  description = "The mode for the log driver."
+  type        = string
+  default     = "non-blocking"
+}
+
+variable "log_max_buffer_size" {
+  description = "The maximum buffer size for the log driver."
+  type        = string
+  default     = "1m"
+}
+
 ################################################################################
 # CloudWatch Log Group
 ################################################################################
