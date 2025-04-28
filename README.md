@@ -1,4 +1,3 @@
-<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name | Version |
@@ -57,4 +56,7 @@ No modules.
 | <a name="output_revision"></a> [revision](#output\_revision) | n/a |
 | <a name="output_role_arn"></a> [role\_arn](#output\_role\_arn) | n/a |
 | <a name="output_role_name"></a> [role\_name](#output\_role\_name) | n/a |
-<!-- END_TF_DOCS -->
+
+## License
+
+Apache 2 Licensed. See [LICENSE](https://github.com/TechHoldingLLC/terraform-aws-ecs-task-definition/blob/main/LICENSE) for full details.
