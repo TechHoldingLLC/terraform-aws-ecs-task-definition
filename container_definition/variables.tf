@@ -283,7 +283,7 @@ variable "working_directory" {
 variable "log_mode" {
   description = "The mode for the log driver."
   type        = string
-  default     = "blocking"
+  default     = "non-blocking"
 }
 
 variable "log_max_buffer_size" {
