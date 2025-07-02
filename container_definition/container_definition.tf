@@ -28,7 +28,7 @@ locals {
   }, var.health_check) : null
 
   definition = {
-    command                = length(var.command) > 0 ? ["sh", "-c", var.command] : null
+    command                = length(var.command) > 0 ? [var.command] : null
     cpu                    = var.cpu
     dependsOn              = length(var.dependencies) > 0 ? var.dependencies : null # depends_on is a reserved word
     disableNetworking      = local.is_not_windows ? var.disable_networking : null
