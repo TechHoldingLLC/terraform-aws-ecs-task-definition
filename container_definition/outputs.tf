@@ -11,6 +11,11 @@ output "container_definition" {
   value       = local.container_definition
 }
 
+output "container_definition_name" {
+  description = "Name of the container definition"
+  value       = local.container_definition.name
+}
+
 ################################################################################
 # CloudWatch Log Group
 ################################################################################
