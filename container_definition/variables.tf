@@ -229,7 +229,7 @@ variable "restart_policy" {
 }
 
 variable "secret_environment_variables" {
-  description = "The secrets to pass to the container. For more information, see [Specifying Sensitive Data](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/specifying-sensitive-data.html) in the Amazon Elastic Container Service Developer Guide"
+  description = "The secrets to pass to the container, as name => source. A value starting with arn: is used as a Secrets Manager ARN; anything else is an SSM parameter path under parameter_path_prefix. For more information, see [Specifying Sensitive Data](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/specifying-sensitive-data.html) in the Amazon Elastic Container Service Developer Guide"
   type        = map(string)
   default     = {}
 }

@@ -35,20 +35,32 @@ resource "aws_iam_role_policy" "ecs_task_execution" {
   policy = jsonencode(
     {
       Version = "2012-10-17"
-      Statement = [
-        {
-          Sid      = ""
-          Action   = "ssm:GetParameters"
-          Effect   = "Allow"
-          Resource = [for secret in local.secret_environment_variables : "arn:${local.aws_partition}:ssm:${local.region}:${local.account_id}:parameter${secret["valueFrom"]}"]
-        },
-        {
-          Sid      = ""
-          Action   = "kms:Decrypt"
-          Effect   = "Allow"
-          Resource = local.ssm_kms_key_arn
-        }
-      ]
+      Statement = concat(
+        length(local.ssm_parameter_arns) > 0 ? [
+          {
+            Sid      = ""
+            Action   = "ssm:GetParameters"
+            Effect   = "Allow"
+            Resource = local.ssm_parameter_arns
+          }
+        ] : [],
+        length(local.secretsmanager_secret_arns) > 0 ? [
+          {
+            Sid      = ""
+            Action   = "secretsmanager:GetSecretValue"
+            Effect   = "Allow"
+            Resource = local.secretsmanager_secret_arns
+          }
+        ] : [],
+        length(local.kms_key_arns) > 0 ? [
+          {
+            Sid      = ""
+            Action   = "kms:Decrypt"
+            Effect   = "Allow"
+            Resource = local.kms_key_arns
+          }
+        ] : []
+      )
     }
   )
 }
