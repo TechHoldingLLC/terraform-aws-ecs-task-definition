@@ -25,11 +25,12 @@ locals {
     ]
   ])
 
-  # A valueFrom is either a Secrets Manager ARN or an SSM parameter path.
-  secretsmanager_secret_arns = [
+  # A valueFrom is either an SSM path or a Secrets Manager ARN that may carry a :json-key:version-stage:version-id suffix IAM must not see.
+  secretsmanager_secret_arns = distinct([
     for secret in local.secret_environment_variables :
-    secret["valueFrom"] if startswith(secret["valueFrom"], "arn:${local.aws_partition}:secretsmanager:")
-  ]
+    join(":", slice(split(":", secret["valueFrom"]), 0, 7))
+    if startswith(secret["valueFrom"], "arn:${local.aws_partition}:secretsmanager:")
+  ])
 
   ssm_parameter_arns = [
     for secret in local.secret_environment_variables :
