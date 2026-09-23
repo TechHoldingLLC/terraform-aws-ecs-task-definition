@@ -60,7 +60,7 @@ locals {
     repositoryCredentials  = length(var.repository_credentials) > 0 ? var.repository_credentials : null
     resourceRequirements   = length(var.resource_requirements) > 0 ? var.resource_requirements : null
     restartPolicy          = length(var.restart_policy) > 0 ? var.restart_policy : null
-    secrets                = local.secret_environment_variables
+    secrets                = length(local.container_secrets) > 0 ? local.container_secrets : null
     startTimeout           = var.start_timeout
     stopTimeout            = var.stop_timeout
     systemControls         = length(var.system_controls) > 0 ? var.system_controls : []

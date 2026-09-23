@@ -84,3 +84,9 @@ variable "runtime_platform" {
   })
   default = null
 }
+
+variable "secrets_kms_key_arns" {
+  description = "KMS key ARNs encrypting any Secrets Manager secrets used in container secrets"
+  type        = list(string)
+  default     = []
+}
