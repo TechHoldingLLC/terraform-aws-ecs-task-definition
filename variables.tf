@@ -85,6 +85,12 @@ variable "runtime_platform" {
   default = null
 }
 
+variable "secretsmanager_secret_arns" {
+  description = "Secrets Manager ARNs the execution role may read, from each container definition module's secretsmanager_secret_arns output"
+  type        = list(string)
+  default     = []
+}
+
 variable "secrets_kms_key_arns" {
   description = "KMS key ARNs encrypting any Secrets Manager secrets used in container secrets"
   type        = list(string)

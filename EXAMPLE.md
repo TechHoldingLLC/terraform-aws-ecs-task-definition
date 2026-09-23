@@ -36,3 +36,34 @@ module "ecs_task_definition" {
 }
 ```
 
+## Create ECS Task Definition reading Secrets Manager secrets
+The container names the secrets; the task definition needs their ARNs so the execution role can
+read them, and the KMS key ARNs if they are encrypted with a customer managed key.
+```
+module "con_def" {
+  source = "git::https://github.com/TechHoldingLLC/terraform-aws-ecs-task-definition.git//container_definition?ref=v1.1.0"
+
+  name  = "api"
+  image = var.api_image
+
+  secretsmanager_environment_variables = {
+    DB_USER     = { secret_arn = aws_secretsmanager_secret.db.arn, json_key = "username" }
+    DB_PASSWORD = { secret_arn = aws_secretsmanager_secret.db.arn, json_key = "password" }
+  }
+}
+
+module "ecs_task_definition" {
+  source = "git::https://github.com/TechHoldingLLC/terraform-aws-ecs-task-definition.git?ref=v1.1.0"
+
+  name        = "demo-ecs-task-definition"
+  task_cpu    = 256
+  task_memory = 512
+
+  container_definitions = [module.con_def.container_definition]
+
+  secretsmanager_secret_arns = module.con_def.secretsmanager_secret_arns
+  secrets_kms_key_arns       = [aws_kms_key.secrets.arn]
+}
+```
+Selecting a json_key needs Fargate platform version 1.4.0 or later. Omit it to inject the whole
+secret value.

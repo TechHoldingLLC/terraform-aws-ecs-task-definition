@@ -4,14 +4,8 @@
 
 data "aws_region" "current" {}
 
-locals {
-  # A value is either a Secrets Manager ARN or a path under parameter_path_prefix.
-  secretsmanager_env_vars = { for name, value in var.secret_environment_variables : name => value if startswith(value, "arn:") }
-  ssm_env_vars            = { for name, value in var.secret_environment_variables : name => value if !startswith(value, "arn:") }
-}
-
 data "aws_ssm_parameter" "secret_env_vars" {
-  for_each = local.ssm_env_vars
+  for_each = var.secret_environment_variables
   name     = "${var.parameter_path_prefix}/${each.value}"
 }
 
@@ -36,13 +30,14 @@ locals {
     }
   ])
   secret_environment_variables = concat(
-    [for name, value in local.ssm_env_vars : {
+    [for name, value in var.secret_environment_variables : {
       name      = name
       valueFrom = data.aws_ssm_parameter.secret_env_vars[name].name
     }],
-    [for name, value in local.secretsmanager_env_vars : {
+    # ECS reads one JSON key when the ARN carries a :key:version-stage:version-id suffix.
+    [for name, secret in var.secretsmanager_environment_variables : {
       name      = name
-      valueFrom = value
+      valueFrom = secret.json_key == null ? secret.secret_arn : "${secret.secret_arn}:${secret.json_key}::"
     }]
   )
 }

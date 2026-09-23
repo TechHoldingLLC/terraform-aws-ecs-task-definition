@@ -29,3 +29,8 @@ output "cloudwatch_log_group_arn" {
   description = "ARN of CloudWatch log group created"
   value       = try(aws_cloudwatch_log_group.this[0].arn, null)
 }
+
+output "secretsmanager_secret_arns" {
+  description = "Bare Secrets Manager ARNs referenced by this container, for the execution role policy"
+  value       = distinct([for secret in var.secretsmanager_environment_variables : secret.secret_arn])
+}

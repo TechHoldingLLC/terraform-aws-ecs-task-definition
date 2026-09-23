@@ -229,9 +229,18 @@ variable "restart_policy" {
 }
 
 variable "secret_environment_variables" {
-  description = "The secrets to pass to the container, as name => source. A value starting with arn: is used as a Secrets Manager ARN; anything else is an SSM parameter path under parameter_path_prefix. For more information, see [Specifying Sensitive Data](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/specifying-sensitive-data.html) in the Amazon Elastic Container Service Developer Guide"
+  description = "SSM Parameter Store secrets to pass to the container, as name => parameter path under parameter_path_prefix. For more information, see [Specifying Sensitive Data](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/specifying-sensitive-data.html) in the Amazon Elastic Container Service Developer Guide"
   type        = map(string)
   default     = {}
+}
+
+variable "secretsmanager_environment_variables" {
+  description = "Secrets Manager secrets to pass to the container, as name => { secret_arn, json_key }. Omit json_key to inject the whole secret value. Selecting a key needs Fargate platform version 1.4.0 or later"
+  type = map(object({
+    secret_arn = string
+    json_key   = optional(string)
+  }))
+  default = {}
 }
 
 variable "start_timeout" {

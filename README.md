@@ -40,6 +40,7 @@ No modules.
 | <a name="input_requires_compatibilities"></a> [requires\_compatibilities](#input\_requires\_compatibilities) | A set of launch types required by the task. The valid values are EC2 and FARGATE. | `list(string)` | <pre>[<br/>  "FARGATE"<br/>]</pre> | no |
 | <a name="input_runtime_platform"></a> [runtime\_platform](#input\_runtime\_platform) | The operating system family and the CPU architecture to use for the task. The valid values for operatingSystemFamily are WINDOWS and LINUX. The valid values for cpuArchitecture are X86\_64 and ARM64. | <pre>object({<br/>    operating_system_family = string<br/>    cpu_architecture        = string<br/>  })</pre> | `null` | no |
 | <a name="input_secrets_kms_key_arns"></a> [secrets\_kms\_key\_arns](#input\_secrets\_kms\_key\_arns) | KMS key ARNs encrypting any Secrets Manager secrets used in container secrets | `list(string)` | `[]` | no |
+| <a name="input_secretsmanager_secret_arns"></a> [secretsmanager\_secret\_arns](#input\_secretsmanager\_secret\_arns) | Secrets Manager ARNs the execution role may read, from each container definition module's secretsmanager\_secret\_arns output | `list(string)` | `[]` | no |
 | <a name="input_ssm_kms_alias"></a> [ssm\_kms\_alias](#input\_ssm\_kms\_alias) | SSM kms key alias | `string` | `"alias/aws/ssm"` | no |
 | <a name="input_task_cpu"></a> [task\_cpu](#input\_task\_cpu) | ECS fargate task cpu | `number` | n/a | yes |
 | <a name="input_task_memory"></a> [task\_memory](#input\_task\_memory) | ECS fargate task memory | `number` | n/a | yes |

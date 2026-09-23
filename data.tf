@@ -25,13 +25,10 @@ locals {
     ]
   ])
 
-  # A valueFrom is either an SSM path or a Secrets Manager ARN that may carry a :json-key:version-stage:version-id suffix IAM must not see.
-  secretsmanager_secret_arns = distinct([
-    for secret in local.secret_environment_variables :
-    join(":", slice(split(":", secret["valueFrom"]), 0, 7))
-    if startswith(secret["valueFrom"], "arn:${local.aws_partition}:secretsmanager:")
-  ])
+  # The container definition hands over bare ARNs, so nothing has to be parsed back out of a valueFrom.
+  secretsmanager_secret_arns = distinct(flatten(var.secretsmanager_secret_arns))
 
+  # The container merges both sources into one secrets list, so skip the ARNs to leave only SSM paths.
   ssm_parameter_arns = [
     for secret in local.secret_environment_variables :
     "arn:${local.aws_partition}:ssm:${local.region}:${local.account_id}:parameter${secret["valueFrom"]}"
