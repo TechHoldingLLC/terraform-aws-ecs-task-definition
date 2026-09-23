@@ -7,10 +7,8 @@ resource "aws_iam_role" "ecs_task_execution" {
   name = "${var.name}-ecs-task-execution"
   assume_role_policy = jsonencode(
     {
-      Version = "2012-10-17"
       Statement = [
         {
-          Sid    = ""
           Action = "sts:AssumeRole"
           Effect = "Allow"
           Principal = {
@@ -29,26 +27,38 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution" {
 }
 
 resource "aws_iam_role_policy" "ecs_task_execution" {
-  count = length(local.secret_environment_variables) > 0 ? 1 : 0
+  count = length(local.secret_sources) > 0 ? 1 : 0
   name  = aws_iam_role.ecs_task_execution.name
   role  = aws_iam_role.ecs_task_execution.name
   policy = jsonencode(
     {
       Version = "2012-10-17"
-      Statement = [
-        {
-          Sid      = ""
-          Action   = "ssm:GetParameters"
-          Effect   = "Allow"
-          Resource = [for secret in local.secret_environment_variables : "arn:${local.aws_partition}:ssm:${local.region}:${local.account_id}:parameter${secret["valueFrom"]}"]
-        },
-        {
-          Sid      = ""
-          Action   = "kms:Decrypt"
-          Effect   = "Allow"
-          Resource = local.ssm_kms_key_arn
-        }
-      ]
+      Statement = concat(
+        length(local.ssm_parameter_arns) > 0 ? [
+          {
+            Sid      = "ReadSSMParameters"
+            Action   = "ssm:GetParameters"
+            Effect   = "Allow"
+            Resource = local.ssm_parameter_arns
+          }
+        ] : [],
+        length(local.secretsmanager_secret_arns) > 0 ? [
+          {
+            Sid      = "ReadSecretsManagerSecrets"
+            Action   = "secretsmanager:GetSecretValue"
+            Effect   = "Allow"
+            Resource = local.secretsmanager_secret_arns
+          }
+        ] : [],
+        length(local.kms_key_arns) > 0 ? [
+          {
+            Sid      = "DecryptSecrets"
+            Action   = "kms:Decrypt"
+            Effect   = "Allow"
+            Resource = local.kms_key_arns
+          }
+        ] : []
+      )
     }
   )
 }

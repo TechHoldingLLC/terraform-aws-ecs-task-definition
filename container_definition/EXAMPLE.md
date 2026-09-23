@@ -36,8 +36,12 @@ module "ecs_container_definition" {
     FOO = "BAR"
   }
   parameter_path_prefix = "/project/env"
-  secret_environment_variables = {
+  ssm_environment_variables = {
     SECRET = "remaining_path/to/ssm/variable"
+  }
+  secretsmanager_environment_variables = {
+    DB_PASSWORD = { secret_arn = aws_secretsmanager_secret.db.arn, json_key = "password" }
+    API_KEY     = { secret_arn = aws_secretsmanager_secret.api.arn }
   }
   cloudwatch_log_retention_in_days = 30
 
